@@ -19,7 +19,7 @@ function Home() {
 
   const isSearch = useRef(false);
   const isMounted = useRef(false);
-
+  console.log(1);
   const { search, category, sortItem, page } = useSelector(
     (state) => state.filters
   );
