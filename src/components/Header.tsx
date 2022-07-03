@@ -4,19 +4,19 @@ import debounce from "lodash.debounce";
 import { useDispatch, useSelector } from "react-redux";
 
 import logoSvg from "../assets/imgs/pizza-logo.svg";
-import { setSearch } from "../redux/slices/filtersSlice";
+import { setSearch, resetFilters } from "../redux/slices/filtersSlice";
+import { cartSelector } from "../redux/slices/cartSlice";
 
 const Header = () => {
-  const inputRef = useRef();
+  const inputRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
 
   const [value, setValue] = useState("");
 
-  const { price: cartTotalPrice, count: cartTotalCount } = useSelector(
-    (state) => state.cart.total
-  );
+  const { totalPrice, totalCount } = useSelector(cartSelector);
 
-  const onInputChange = (e) => {
+  //ТУТ
+  const onInputChange = (e: any) => {
     const inputData = e.target.value;
     setValue(inputData);
     debouncedInput(inputData);
@@ -31,10 +31,22 @@ const Header = () => {
     []
   );
 
+  const onClearClich = () => {
+    setValue("");
+    dispatch(setSearch(""));
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }
+
   return (
     <div className="header">
       <div className="container">
-        <Link to="/" className="header__logo">
+        <Link
+          onClick={() => dispatch(resetFilters())}
+          to="/"
+          className="header__logo"
+        >
           <img width="38" src={logoSvg} alt="Pizza logo" />
           <div>
             <h1>React Pizza</h1>
@@ -84,11 +96,7 @@ const Header = () => {
           />
           {value ? (
             <svg
-              onClick={() => {
-                setValue("");
-                dispatch(setSearch(""));
-                inputRef.current.focus();
-              }}
+              onClick={onClearClich}
               className="search-close"
               height="16"
               viewBox="0 0 16 16"
@@ -107,7 +115,7 @@ const Header = () => {
 
         <div className="header__cart">
           <Link to="/cart" className="button button--cart">
-            <span>{cartTotalPrice} ₽</span>
+            <span>{totalPrice} ₽</span>
             <div className="button__delimiter"></div>
             <svg
               width="18"
@@ -138,7 +146,7 @@ const Header = () => {
                 strokeLinejoin="round"
               />
             </svg>
-            <span>{cartTotalCount}</span>
+            <span>{totalCount}</span>
           </Link>
         </div>
       </div>

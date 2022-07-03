@@ -33,10 +33,28 @@ export const filters = createSlice({
       state.category = action.payload.category;
       state.sortItem = action.payload.sort;
     },
+    resetFilters: (state) => {
+      state.page = 1;
+      state.search = "";
+      state.category = 0;
+      state.sortItem = {
+        label: "популярности, по убыванию",
+        property: "rating",
+        sortBy: "desc",
+      };
+    },
   },
 });
 
-export const { setCategory, setSortItem, setSearch, setPage, setFilters } =
-  filters.actions;
+export const {
+  setCategory,
+  setSortItem,
+  setSearch,
+  setPage,
+  setFilters,
+  resetFilters,
+} = filters.actions;
+
+export const filtersSelector = (state) => state.filters;
 
 export default filters.reducer;

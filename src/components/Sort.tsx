@@ -1,9 +1,19 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { setSortItem } from "../redux/slices/filtersSlice";
+import {
+  // Тут
+  setSortItem,
+  filtersSelector,
+} from "../redux/slices/filtersSlice";
 
-export const sortList = [
+type SortListItem = {
+    label: string
+    property: string
+    sortBy: string
+}
+
+export const sortList: SortListItem[] = [
   {
     label: "популярности, по возрастанию",
     property: "rating",
@@ -36,14 +46,15 @@ export const sortList = [
   },
 ];
 
-const Sort = () => {
+const Sort: React.FC = () => {
   const dispatch = useDispatch();
-  const sortRef = useRef();
+  const sortRef = useRef<HTMLDivElement>(null);
 
   const [isPopupVisible, setPopupVisible] = useState(false);
 
   useEffect(() => {
-    const handleClickOutside = (evt) => {
+    // ТУТ
+    const handleClickOutside = (evt: any) => {
       if (!evt.path.includes(sortRef.current)) {
         setPopupVisible(false);
       }
@@ -54,9 +65,10 @@ const Sort = () => {
     };
   }, []);
 
-  const sortItem = useSelector((state) => state.filters.sortItem);
+  // Тут
+  const { sortItem } = useSelector(filtersSelector);
 
-  const onSortClick = (item) => {
+  const onSortClick = (item: SortListItem) => {
     setPopupVisible(false);
     dispatch(setSortItem(item));
   };

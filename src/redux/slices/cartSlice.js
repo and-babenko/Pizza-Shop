@@ -8,10 +8,8 @@ const calcTotalPrice = (items) => {
 
 const initialState = {
   items: [],
-  total: {
-    price: 0,
-    count: 0,
-  },
+  totalPrice: 0,
+  totalCount: 0,
 };
 
 export const cartSlice = createSlice({
@@ -19,7 +17,7 @@ export const cartSlice = createSlice({
   initialState,
   reducers: {
     addItemToCart: (state, action) => {
-      state.total.count++;
+      state.totalCount++;
       const addedPizza = state.items.find(
         (elem) => elem.id === action.payload.id
       );
@@ -28,11 +26,11 @@ export const cartSlice = createSlice({
       } else {
         state.items.push(action.payload);
       }
-      state.total.price = calcTotalPrice(state.items);
+      state.totalPrice = calcTotalPrice(state.items);
     },
 
     removeItemFromCart: (state, action) => {
-      state.total.count--;
+      state.totalCount--;
       const removedPizza = state.items.find(
         (elem) => elem.id === action.payload
       );
@@ -43,26 +41,30 @@ export const cartSlice = createSlice({
         const removedPizzaIndex = state.items.indexOf(removedPizza);
         state.items.splice(removedPizzaIndex, 1);
       }
-      state.total.price = calcTotalPrice(state.items);
+      state.totalPrice = calcTotalPrice(state.items);
     },
 
     deleteItem: (state, action) => {
       const removedPizzaIndex = state.items.indexOf(action.payload.id);
       state.items.splice(removedPizzaIndex, 1);
 
-      state.total.count -= action.payload.count;
-      state.total.price = calcTotalPrice(state.items);
+      state.totalCount -= action.payload.count;
+      state.totalPrice = calcTotalPrice(state.items);
     },
 
     deleteAllItems: (state) => {
       state.items = [];
-      state.total.price = 0;
-      state.total.count = 0;
+      state.totalPrice = 0;
+      state.totalCount = 0;
     },
   },
 });
 
 export const { addItemToCart, deleteAllItems, removeItemFromCart, deleteItem } =
   cartSlice.actions;
+
+export const cartSelector = (state) => state.cart;
+export const itemInCartSelector = (state, id) =>
+  state.cart.items.find((el) => el.id === id);
 
 export default cartSlice.reducer;

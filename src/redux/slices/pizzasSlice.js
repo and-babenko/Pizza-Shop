@@ -6,7 +6,7 @@ const initialState = {
   loadingIndicator: "",
 };
 
-export const fetchPizzasFromStore = createAsyncThunk(
+export const fetchPizzas = createAsyncThunk(
   "pizzas/fetchpizzas",
 
   async (params) => {
@@ -29,23 +29,23 @@ export const pizzasStore = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
-    [fetchPizzasFromStore.pending]: (state) => {
+    [fetchPizzas.pending]: (state) => {
       state.loadingIndicator = "pending";
       state.pizzas = [];
     },
-    [fetchPizzasFromStore.rejected]: (state, action) => {
+    [fetchPizzas.rejected]: (state, action) => {
       state.loadingIndicator = "rejected";
       console.log(action.error.message);
       state.pizzas = [];
     },
 
-    [fetchPizzasFromStore.fulfilled]: (state, action) => {
+    [fetchPizzas.fulfilled]: (state, action) => {
       state.loadingIndicator = "fulfilled";
       state.pizzas = action.payload;
     },
   },
 });
 
-export const {} = pizzasStore.actions;
+export const pizzasSelector = (state) => state.pizzas;
 
 export default pizzasStore.reducer;
