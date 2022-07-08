@@ -1,40 +1,52 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { addItemToCart, itemInCartSelector } from "../redux/slices/cartSlice";
+import {
+  addItemToCart,
+  CartItemType,
+  itemInCartSelector,
+} from "../redux/slices/cartSlice";
 
-type PizzaItemType = {id: number, imageUrl: string, name: string, types: number[], sizes: number[], price: number}
+type PizzaItemType = {
+  id: number;
+  imageUrl: string;
+  name: string;
+  types: number[];
+  sizes: number[];
+  price: number;
+};
 
-const PizzaItem: React.FC<PizzaItemType> = ({ id, imageUrl, name, types, sizes, price }) => {
+const PizzaItem: React.FC<PizzaItemType> = ({
+  id,
+  imageUrl,
+  name,
+  types,
+  sizes,
+  price,
+}) => {
   const dispatch = useDispatch();
+  const isItemInCart = useSelector(itemInCartSelector(id));
+  const [pizzaType, setPizzaType] = useState(types[0]);
+  const [pizzaSize, setPizzaSize] = useState(0);
 
   const typeNames: string[] = ["тонкое", "традиционное"];
-  const [pizzaType, setPizzaType] = useState(types[0]);
+
+  
   const currentPizzaType = typeNames[pizzaType];
-
-  const [pizzaSize, setPizzaSize] = useState(0);
   const currentPizzaSize = sizes[pizzaSize];
-
-  // Tut
-  // const isItemInCart = useSelector((state) =>
-  //   state.cart.items.find((el) => el.id === id)
-  // );
-  const isItemInCart = useSelector(itemInCartSelector)
-
   const pizzasCount = isItemInCart ? isItemInCart.count : 0;
 
   const onAddToCartClick = () => {
-    dispatch(
-      addItemToCart({
-        id,
-        imageUrl,
-        name,
-        price,
-        currentPizzaType,
-        currentPizzaSize,
-        count: 1,
-      })
-    );
+    const item: CartItemType = {
+      id,
+      imageUrl,
+      name,
+      price,
+      currentPizzaType,
+      currentPizzaSize,
+      count: 1,
+    };
+    dispatch(addItemToCart(item));
   };
 
   return (

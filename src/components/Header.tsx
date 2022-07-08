@@ -1,29 +1,27 @@
 import { useRef, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import debounce from "lodash.debounce";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import logoSvg from "../assets/imgs/pizza-logo.svg";
 import { setSearch, resetFilters } from "../redux/slices/filtersSlice";
 import { cartSelector } from "../redux/slices/cartSlice";
+import { useAppDispatch } from "../redux/store";
 
 const Header = () => {
   const inputRef = useRef<HTMLInputElement>(null);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState<string>("");
 
   const { totalPrice, totalCount } = useSelector(cartSelector);
 
-  //ТУТ
-  const onInputChange = (e: any) => {
+  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputData = e.target.value;
     setValue(inputData);
     debouncedInput(inputData);
   };
-
-  //React Hook useCallback received a function whose dependencies are unknown. Pass an inline function instead
-  // eslint-disable-next-line
+  //eslint-disable-next-line
   const debouncedInput = useCallback(
     debounce((value) => {
       dispatch(setSearch(value));
@@ -31,13 +29,11 @@ const Header = () => {
     []
   );
 
-  const onClearClich = () => {
+  const onClearClich = (event: React.MouseEvent<SVGSVGElement>) => {
     setValue("");
     dispatch(setSearch(""));
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
-  }
+    inputRef.current?.focus();
+  };
 
   return (
     <div className="header">
@@ -112,7 +108,6 @@ const Header = () => {
             ""
           )}
         </div>
-
         <div className="header__cart">
           <Link to="/cart" className="button button--cart">
             <span>{totalPrice} ₽</span>

@@ -2,18 +2,12 @@ import { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
-  // Тут
   setSortItem,
   filtersSelector,
+  sortItemType,
 } from "../redux/slices/filtersSlice";
 
-type SortListItem = {
-    label: string
-    property: string
-    sortBy: string
-}
-
-export const sortList: SortListItem[] = [
+export const sortList: sortItemType[] = [
   {
     label: "популярности, по возрастанию",
     property: "rating",
@@ -53,22 +47,26 @@ const Sort: React.FC = () => {
   const [isPopupVisible, setPopupVisible] = useState(false);
 
   useEffect(() => {
-    // ТУТ
-    const handleClickOutside = (evt: any) => {
-      if (!evt.path.includes(sortRef.current)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      const _event = event as MouseEvent & {
+        path: Node[];
+      };
+
+      if (sortRef.current && !_event.path.includes(sortRef.current)) {
         setPopupVisible(false);
       }
     };
+
     document.body.addEventListener("click", handleClickOutside);
+
     return () => {
       document.body.removeEventListener("click", handleClickOutside);
     };
   }, []);
 
-  // Тут
   const { sortItem } = useSelector(filtersSelector);
 
-  const onSortClick = (item: SortListItem) => {
+  const onSortClick = (item: sortItemType) => {
     setPopupVisible(false);
     dispatch(setSortItem(item));
   };

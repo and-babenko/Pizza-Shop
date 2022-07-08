@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -10,7 +9,7 @@ function Cart() {
   const dispatch = useDispatch();
 
   const { items: cartItems } = useSelector(cartSelector);
-
+  
   const { totalPrice, totalCount } = useSelector(cartSelector);
 
   if (cartItems.length === 0) {

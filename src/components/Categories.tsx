@@ -1,7 +1,7 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
-// Tut
 import { setCategory, filtersSelector } from "../redux/slices/filtersSlice";
+import { useAppDispatch } from "../redux/store";
 
 const Categories: React.FC = () => {
   const categoriesList: string[] = [
@@ -10,12 +10,10 @@ const Categories: React.FC = () => {
     "Вегетарианская",
     "Гриль",
     "Острые",
-    "Закрытые",    
+    "Закрытые",
   ];
 
-  const dispatch = useDispatch();
-
-    // Tut
+  const dispatch = useAppDispatch();
   const { category } = useSelector(filtersSelector);
 
   return (

@@ -1,6 +1,20 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "../store";
 
-const initialState = {
+export type sortItemType = {
+  label: string;
+  property: "rating" | "price" | "name";
+  sortBy: "desc" | "inc";
+};
+
+export interface FilterSliceState {
+  category?: number;
+  sortItem: sortItemType;
+  search: string;
+  page?: number;
+}
+
+const initialState: FilterSliceState = {
   category: 0,
   sortItem: {
     label: "популярности, по убыванию",
@@ -15,23 +29,23 @@ export const filters = createSlice({
   name: "counter",
   initialState,
   reducers: {
-    setCategory: (state, action) => {
+    setCategory: (state, action: PayloadAction<number>) => {
       state.category = action.payload;
     },
-    setSortItem: (state, action) => {
+    setSortItem: (state, action: PayloadAction<sortItemType>) => {
       state.sortItem = action.payload;
     },
-    setSearch: (state, action) => {
+    setSearch: (state, action: PayloadAction<string>) => {
       state.search = action.payload;
     },
-    setPage: (state, action) => {
+    setPage: (state, action: PayloadAction<number>) => {
       state.page = action.payload;
     },
-    setFilters: (state, action) => {
+    setFilters: (state, action: PayloadAction<FilterSliceState>) => {
       state.page = action.payload.page;
-      state.search = action.payload.headerSearch;
+      state.search = action.payload.search;
       state.category = action.payload.category;
-      state.sortItem = action.payload.sort;
+      state.sortItem = action.payload.sortItem;
     },
     resetFilters: (state) => {
       state.page = 1;
@@ -55,6 +69,6 @@ export const {
   resetFilters,
 } = filters.actions;
 
-export const filtersSelector = (state) => state.filters;
+export const filtersSelector = (state: RootState) => state.filters;
 
 export default filters.reducer;

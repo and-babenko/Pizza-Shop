@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import ReactPaginate from "react-paginate";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
 import qs from "qs";
 
@@ -13,19 +13,28 @@ import {
   setPage,
   setFilters,
   filtersSelector,
+  FilterSliceState,
 } from "../redux/slices/filtersSlice";
 import { sortList } from "../components/Sort";
 import { fetchPizzas, pizzasSelector } from "../redux/slices/pizzasSlice";
+import { useAppDispatch } from "../redux/store";
+
+type queryType = {
+  page?: number;
+  sortUrl: string;
+  sortBy: string;
+  category?: number;
+  search?: string;
+};
 
 const Home = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
   const isSearch = useRef(false);
   const isMounted = useRef(false);
 
-  // Tut
   const { search, category, sortItem, page } = useSelector(filtersSelector);
   const { pizzas, loadingIndicator } = useSelector(pizzasSelector);
 
@@ -36,20 +45,32 @@ const Home = () => {
   useEffect(() => {
     if (location.search) {
       const params = qs.parse(location.search.substring(1));
+
       const sort = sortList.find(
         (obj) => obj.property === params.sortUrl && obj.sortBy === params.sortBy
       );
 
-      dispatch(setFilters({ ...params, sort }));
-      isSearch.current = true;
-    }
+      if (sort) {
+        const categoryNumber = params.category ? Number(params.category) : 0;
+        const searchValue = params.search ? params.search.toString() : "";
 
+        const filtersData: FilterSliceState = {
+          category: categoryNumber,
+          page: Number(params.page),
+          sortItem: sort,
+          search: searchValue,
+        };
+
+        dispatch(setFilters(filtersData));
+        isSearch.current = true;
+      }
+    }
     // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     if (isMounted.current) {
-      const queryObj = {
+      const queryObj: queryType = {
         page,
         sortUrl: sortItem.property,
         sortBy: sortItem.sortBy,
@@ -58,11 +79,13 @@ const Home = () => {
       if (category !== 0) {
         queryObj.category = category;
       }
+
       if (search) {
         queryObj.search = search;
       }
 
       const queryString = qs.stringify(queryObj);
+
       if (queryString !== "page=1&sortUrl=rating&sortBy=desc") {
         navigate(`?${queryString}`);
       } else {
@@ -75,9 +98,12 @@ const Home = () => {
       getPizzas();
     }
     isSearch.current = false;
-
     // eslint-disable-next-line
   }, [search, category, sortItem, page]);
+
+  const onPaginateClick = (e: { selected: number; }) => {
+    dispatch(setPage(e.selected + 1));
+  };
 
   const pizzasList = pizzas.map((pizza) => (
     <PizzaItem key={pizza.id} {...pizza} />
@@ -112,9 +138,7 @@ const Home = () => {
       )}
       <ReactPaginate
         nextLabel=">"
-        onPageChange={(e) => {
-          dispatch(setPage(e.selected + 1));
-        }}
+        onPageChange={onPaginateClick}
         pageRangeDisplayed={3}
         marginPagesDisplayed={2}
         pageCount={3}
