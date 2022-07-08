@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import emptyCartImage from "../assets/imgs/empty-cart.png";
 
-function EmpryCart() {
+const EmpryCart: React.FC = () => {
   return (
     <div className="cart cart--empty">
       <h2>
@@ -20,6 +20,6 @@ function EmpryCart() {
       </Link>
     </div>
   );
-}
+};
 
 export default EmpryCart;

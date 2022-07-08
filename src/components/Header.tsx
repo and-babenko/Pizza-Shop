@@ -1,29 +1,27 @@
 import { useRef, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import debounce from "lodash.debounce";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import logoSvg from "../assets/imgs/pizza-logo.svg";
-import { setSearch } from "../redux/slices/filtersSlice";
+import { setSearch, resetFilters } from "../redux/slices/filtersSlice";
+import { cartSelector } from "../redux/slices/cartSlice";
+import { useAppDispatch } from "../redux/store";
 
 const Header = () => {
-  const inputRef = useRef();
-  const dispatch = useDispatch();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const dispatch = useAppDispatch();
 
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState<string>("");
 
-  const { price: cartTotalPrice, count: cartTotalCount } = useSelector(
-    (state) => state.cart.total
-  );
+  const { totalPrice, totalCount } = useSelector(cartSelector);
 
-  const onInputChange = (e) => {
+  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputData = e.target.value;
     setValue(inputData);
     debouncedInput(inputData);
   };
-
-  //React Hook useCallback received a function whose dependencies are unknown. Pass an inline function instead
-  // eslint-disable-next-line
+  //eslint-disable-next-line
   const debouncedInput = useCallback(
     debounce((value) => {
       dispatch(setSearch(value));
@@ -31,10 +29,20 @@ const Header = () => {
     []
   );
 
+  const onClearClich = (event: React.MouseEvent<SVGSVGElement>) => {
+    setValue("");
+    dispatch(setSearch(""));
+    inputRef.current?.focus();
+  };
+
   return (
     <div className="header">
       <div className="container">
-        <Link to="/" className="header__logo">
+        <Link
+          onClick={() => dispatch(resetFilters())}
+          to="/"
+          className="header__logo"
+        >
           <img width="38" src={logoSvg} alt="Pizza logo" />
           <div>
             <h1>React Pizza</h1>
@@ -84,11 +92,7 @@ const Header = () => {
           />
           {value ? (
             <svg
-              onClick={() => {
-                setValue("");
-                dispatch(setSearch(""));
-                inputRef.current.focus();
-              }}
+              onClick={onClearClich}
               className="search-close"
               height="16"
               viewBox="0 0 16 16"
@@ -104,10 +108,9 @@ const Header = () => {
             ""
           )}
         </div>
-
         <div className="header__cart">
           <Link to="/cart" className="button button--cart">
-            <span>{cartTotalPrice} ₽</span>
+            <span>{totalPrice} ₽</span>
             <div className="button__delimiter"></div>
             <svg
               width="18"
@@ -138,7 +141,7 @@ const Header = () => {
                 strokeLinejoin="round"
               />
             </svg>
-            <span>{cartTotalCount}</span>
+            <span>{totalCount}</span>
           </Link>
         </div>
       </div>

@@ -1,7 +1,7 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import ReactPaginate from "react-paginate";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useNavigate, useLocation } from "react-router-dom";
 import qs from "qs";
 
 import Categories from "../components/Categories";
@@ -9,42 +9,68 @@ import Sort from "../components/Sort";
 import PizzaItem from "../components/PizzaItem";
 import Skeleton from "../components/Skeleton";
 import "../styles/components/_paginate.scss";
-import { setPage, setFilters } from "../redux/slices/filtersSlice";
+import {
+  setPage,
+  setFilters,
+  filtersSelector,
+  FilterSliceState,
+} from "../redux/slices/filtersSlice";
 import { sortList } from "../components/Sort";
-import { fetchPizzasFromStore } from "../redux/slices/pizzasSlice";
+import { fetchPizzas, pizzasSelector } from "../redux/slices/pizzasSlice";
+import { useAppDispatch } from "../redux/store";
 
-function Home() {
-  const dispatch = useDispatch();
+type queryType = {
+  page?: number;
+  sortUrl: string;
+  sortBy: string;
+  category?: number;
+  search?: string;
+};
+
+const Home = () => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const isSearch = useRef(false);
   const isMounted = useRef(false);
-  console.log(1);
-  const { search, category, sortItem, page } = useSelector(
-    (state) => state.filters
-  );
-  const { pizzas, loadingIndicator } = useSelector((state) => state.pizzas);
 
-  const fetchPizzas = async () => {
-    dispatch(fetchPizzasFromStore({ search, category, sortItem, page }));
+  const { search, category, sortItem, page } = useSelector(filtersSelector);
+  const { pizzas, loadingIndicator } = useSelector(pizzasSelector);
+
+  const getPizzas = async () => {
+    dispatch(fetchPizzas({ search, category, sortItem, page }));
   };
 
   useEffect(() => {
-    if (window.location.search) {
-      const params = qs.parse(window.location.search.substring(1));
+    if (location.search) {
+      const params = qs.parse(location.search.substring(1));
+
       const sort = sortList.find(
         (obj) => obj.property === params.sortUrl && obj.sortBy === params.sortBy
       );
 
-      dispatch(setFilters({ ...params, sort }));
-      isSearch.current = true;
+      if (sort) {
+        const categoryNumber = params.category ? Number(params.category) : 0;
+        const searchValue = params.search ? params.search.toString() : "";
+
+        const filtersData: FilterSliceState = {
+          category: categoryNumber,
+          page: Number(params.page),
+          sortItem: sort,
+          search: searchValue,
+        };
+
+        dispatch(setFilters(filtersData));
+        isSearch.current = true;
+      }
     }
     // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     if (isMounted.current) {
-      const queryObj = {
+      const queryObj: queryType = {
         page,
         sortUrl: sortItem.property,
         sortBy: sortItem.sortBy,
@@ -53,24 +79,34 @@ function Home() {
       if (category !== 0) {
         queryObj.category = category;
       }
+
       if (search) {
         queryObj.search = search;
       }
 
       const queryString = qs.stringify(queryObj);
-      navigate(`?${queryString}`);
+
+      if (queryString !== "page=1&sortUrl=rating&sortBy=desc") {
+        navigate(`?${queryString}`);
+      } else {
+        navigate("");
+      }
     }
     isMounted.current = true;
 
     if (!isSearch.current) {
-      fetchPizzas();
+      getPizzas();
     }
     isSearch.current = false;
     // eslint-disable-next-line
-  }, [category, sortItem.property, page, search]);
+  }, [search, category, sortItem, page]);
+
+  const onPaginateClick = (e: { selected: number; }) => {
+    dispatch(setPage(e.selected + 1));
+  };
 
   const pizzasList = pizzas.map((pizza) => (
-    <PizzaItem key={pizza.id} pizzaItem={pizza} />
+    <PizzaItem key={pizza.id} {...pizza} />
   ));
 
   const skeletons = [...new Array(4)].map((_, index) => (
@@ -102,9 +138,7 @@ function Home() {
       )}
       <ReactPaginate
         nextLabel=">"
-        onPageChange={(e) => {
-          dispatch(setPage(e.selected + 1));
-        }}
+        onPageChange={onPaginateClick}
         pageRangeDisplayed={3}
         marginPagesDisplayed={2}
         pageCount={3}
@@ -123,6 +157,6 @@ function Home() {
       />
     </div>
   );
-}
+};
 
 export default Home;

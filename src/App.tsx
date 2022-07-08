@@ -1,15 +1,15 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
-import "../styles/app.scss";
-import Header from "./Header";
-import Home from "../pages/Home";
-import Cart from "../pages/Cart";
-import NotFound from "../pages/NotFound";
+import "./styles/app.scss";
+import Header from "./components/Header";
+import Home from "./pages/Home";
+import Cart from "./pages/Cart";
+import NotFound from "./pages/NotFound";
 
-function App() {
-  return (
-    <div className="App">
+const App: React.FC = () => {
+return (
+<div className="App">
       <div className="wrapper">
         <Header />
         <div className="content">
@@ -21,7 +21,7 @@ function App() {
         </div>
       </div>
     </div>
-  );
+    )
 }
 
 export default App;
