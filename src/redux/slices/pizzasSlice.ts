@@ -10,7 +10,7 @@ export enum Status {
   ERROR = "rejected",
 }
 
-type PizzaItemType = {
+export type PizzaItemType = {
   id: number;
   imageUrl: string;
   name: string;
@@ -31,9 +31,9 @@ const initialState: InitialStateType = {
 };
 
 export const fetchPizzas = createAsyncThunk<PizzaItemType[], FilterSliceState>(
-  "pizzas/fetchpizzas",
+  "pizzas/getpizzas",
 
-  async (params) => {
+  async (params, thunkApi) => {
     const { page, category, sortItem, search } = params;
 
     const pageUrl = `?page=${page}&limit=8`;
@@ -42,7 +42,7 @@ export const fetchPizzas = createAsyncThunk<PizzaItemType[], FilterSliceState>(
     const searchUrl = search ? `&search=${search}` : "";
 
     const { data } = await axios.get<PizzaItemType[]>(
-      `https://62a21329cd2e8da9b00234ff.mockapi.io/pizzas${pageUrl}${categoryUrl}${sortUrl}${searchUrl}`
+      `https://63d4ec9fc52305feff6abce9.mockapi.io/items${pageUrl}${categoryUrl}${sortUrl}${searchUrl}`
     );
     return data;
   }
@@ -52,6 +52,22 @@ export const pizzasStore = createSlice({
   name: "counter",
   initialState,
   reducers: {},
+
+  // extraReducers: {
+  //   [fetchPizzas.pending.toString()]: (state: InitialStateType) => {
+  //     state.loadingIndicator = Status.LOADING;
+  //     state.pizzas = [];
+  //   },
+  // [fetchPizzas.rejected.toString()]: (state: InitialStateType) => {
+  //   state.loadingIndicator = Status.ERROR;
+  //   state.pizzas = [];
+  // },
+  //   [fetchPizzas.fulfilled.toString()]: (state: InitialStateType, action) => {
+  //     state.loadingIndicator = Status.SUCCESS;
+  //     state.pizzas = action.payload;
+  //   },
+  // },
+
   extraReducers: (builder) => {
     builder.addCase(fetchPizzas.pending, (state, action) => {
       state.loadingIndicator = Status.LOADING;
@@ -66,23 +82,7 @@ export const pizzasStore = createSlice({
       state.pizzas = action.payload;
     });
   },
-  // extraReducers: {
-  //   [fetchPizzas.pending]: (state) => {
-  //     state.loadingIndicator = "pending";
-  //     state.pizzas = [];
-  //   },
-  //   [fetchPizzas.rejected]: (state, action) => {
-  //     state.loadingIndicator = "rejected";
-  //     state.pizzas = [];
-  //   },
-
-  //   [fetchPizzas.fulfilled]: (state, action) => {
-  //     state.loadingIndicator = "fulfilled";
-  //     state.pizzas = action.payload;
-  //   },
-  // },
 });
 
 export const pizzasSelector = (state: RootState) => state.pizzas;
-
 export default pizzasStore.reducer;

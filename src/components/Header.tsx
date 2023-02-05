@@ -1,3 +1,4 @@
+import React from "react";
 import { useRef, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import debounce from "lodash.debounce";
@@ -8,7 +9,7 @@ import { setSearch, resetFilters } from "../redux/slices/filtersSlice";
 import { cartSelector } from "../redux/slices/cartSlice";
 import { useAppDispatch } from "../redux/store";
 
-const Header = () => {
+const Header: React.FC = React.memo(() => {
   const inputRef = useRef<HTMLInputElement>(null);
   const dispatch = useAppDispatch();
 
@@ -147,6 +148,6 @@ const Header = () => {
       </div>
     </div>
   );
-};
+});
 
 export default Header;

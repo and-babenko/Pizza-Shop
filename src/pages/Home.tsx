@@ -18,6 +18,7 @@ import {
 import { sortList } from "../components/Sort";
 import { fetchPizzas, pizzasSelector } from "../redux/slices/pizzasSlice";
 import { useAppDispatch } from "../redux/store";
+import React from "react";
 
 type queryType = {
   page?: number;
@@ -34,7 +35,6 @@ const Home = () => {
 
   const isSearch = useRef(false);
   const isMounted = useRef(false);
-
   const { search, category, sortItem, page } = useSelector(filtersSelector);
   const { pizzas, loadingIndicator } = useSelector(pizzasSelector);
 
@@ -101,7 +101,7 @@ const Home = () => {
     // eslint-disable-next-line
   }, [search, category, sortItem, page]);
 
-  const onPaginateClick = (e: { selected: number; }) => {
+  const onPaginateClick = (e: { selected: number }) => {
     dispatch(setPage(e.selected + 1));
   };
 
@@ -117,7 +117,7 @@ const Home = () => {
     <div className="container">
       <div className="content__top">
         <Categories />
-        <Sort />
+        <Sort value={sortItem} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       {loadingIndicator === "rejected" ? (

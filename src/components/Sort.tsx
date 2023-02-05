@@ -1,11 +1,8 @@
+import React from "react";
 import { useState, useRef, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
-import {
-  setSortItem,
-  filtersSelector,
-  sortItemType,
-} from "../redux/slices/filtersSlice";
+import { setSortItem, sortItemType } from "../redux/slices/filtersSlice";
 
 export const sortList: sortItemType[] = [
   {
@@ -40,8 +37,13 @@ export const sortList: sortItemType[] = [
   },
 ];
 
-const Sort: React.FC = () => {
+interface sortPopupProps {
+  value: sortItemType;
+}
+
+const Sort: React.FC<sortPopupProps> = React.memo(({ value }) => {
   const dispatch = useDispatch();
+
   const sortRef = useRef<HTMLDivElement>(null);
 
   const [isPopupVisible, setPopupVisible] = useState(false);
@@ -52,7 +54,7 @@ const Sort: React.FC = () => {
         path: Node[];
       };
 
-      if (sortRef.current && !_event.path.includes(sortRef.current)) {
+      if (sortRef.current && !_event.composedPath().includes(sortRef.current)) {
         setPopupVisible(false);
       }
     };
@@ -63,8 +65,6 @@ const Sort: React.FC = () => {
       document.body.removeEventListener("click", handleClickOutside);
     };
   }, []);
-
-  const { sortItem } = useSelector(filtersSelector);
 
   const onSortClick = (item: sortItemType) => {
     setPopupVisible(false);
@@ -89,7 +89,7 @@ const Sort: React.FC = () => {
         </svg>
         <b>Сортировка по:</b>
         <span onClick={() => setPopupVisible(!isPopupVisible)}>
-          {sortItem.label}
+          {value.label}
         </span>
       </div>
       {isPopupVisible && (
@@ -101,7 +101,7 @@ const Sort: React.FC = () => {
                   onSortClick(item);
                 }}
                 key={item.label}
-                className={item.label === sortItem.label ? "active" : ""}
+                className={item.label === value.label ? "active" : ""}
               >
                 {item.label}
               </li>
@@ -111,5 +111,5 @@ const Sort: React.FC = () => {
       )}
     </div>
   );
-};
+});
 export default Sort;

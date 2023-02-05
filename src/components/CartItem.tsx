@@ -41,7 +41,7 @@ const CartItem: React.FC<CartItemType> = ({
         </div>
         <div className="cart__item-count">
           <button
-            onClick={() => dispatch(removeItemFromCart(id))}
+            onClick={() => dispatch(removeItemFromCart({ id } as CartItemType))}
             className="button button--outline button--circle cart__item-count-minus"
           >
             <svg
