@@ -4,12 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import CartItem from "../components/CartItem";
 import EmpryCart from "../components/EmpryCart";
 import { deleteAllItems, cartSelector } from "../redux/slices/cartSlice";
+import React from "react";
 
 function Cart() {
   const dispatch = useDispatch();
 
   const { items: cartItems } = useSelector(cartSelector);
-  
+
   const { totalPrice, totalCount } = useSelector(cartSelector);
 
   if (cartItems.length === 0) {

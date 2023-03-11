@@ -1,12 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
-const calcTotalPrice = (items: CartItemType[]) => {
-  return items.reduce((sum, obj) => {
-    return sum + obj.price * obj.count;
-  }, 0);
-};
-
 type DeletedItemType = {
   count: number;
   id: number;
@@ -34,6 +28,12 @@ const initialState: CartSliceState = {
   totalCount: 0,
 };
 
+const calcTotalPrice = (items: CartItemType[]) => {
+  return items.reduce((sum, obj) => {
+    return sum + obj.price * obj.count;
+  }, 0);
+};
+
 export const cartSlice = createSlice({
   name: "cart",
   initialState,
@@ -51,10 +51,10 @@ export const cartSlice = createSlice({
       state.totalPrice = calcTotalPrice(state.items);
     },
 
-    removeItemFromCart: (state, action: PayloadAction<number>) => {
+    removeItemFromCart: (state, action: PayloadAction<CartItemType>) => {
       state.totalCount--;
       const removedPizza = state.items.find(
-        (elem) => elem.id === action.payload
+        (elem) => elem.id === action.payload.id
       );
       if (removedPizza) {
         removedPizza.count--;

@@ -8,9 +8,9 @@ export type sortItemType = {
 };
 
 export interface FilterSliceState {
-  category?: number;
   sortItem: sortItemType;
   search: string;
+  category?: number;
   page?: number;
 }
 
