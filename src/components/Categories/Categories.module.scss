@@ -1,0 +1,127 @@
+@import "../../shared/styles/variables.scss";
+
+.container {
+  padding: 20px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  width: 100%;
+  border-bottom: 1px solid $gray-line;
+}
+
+.categories {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+
+  > li {
+    text-align: center;
+    background-color: $gray-bg;
+    padding: 10px 25px;
+    border-radius: 15px;
+    font-weight: $font-bold;
+    cursor: pointer;
+    transition: all $duration ease-in-out;
+
+    @include noselect();
+
+    &:hover {
+      background-color: darken($gray-bg, 10%);
+    }
+
+    &:active,
+    &.active {
+      background-color: darken($gray-bg, 70%);
+      color: #fff;
+    }
+  }
+}
+
+.sort {
+  position: relative;
+  display: grid;
+  grid-template-columns: 150px 140px;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  @include noselect;
+
+  > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 5px;
+  }
+
+  .icon {
+    transition: 0.1s ease-in-out;
+  }
+
+  .iconRotate {
+    transform: rotate(180deg);
+  }
+
+  > p {
+    color: $orange;
+    cursor: pointer;
+  }
+}
+
+.popup {
+  position: absolute;
+  right: 10px;
+  left: 10px;
+  top: 50px;
+  background: #ffffff;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.09);
+  border-radius: 10px;
+  @include noselect;
+
+  > li {
+    padding: 15px;
+    cursor: pointer;
+    transition: all $duration ease-in-out;
+
+
+    &.active,
+    &:hover {
+      background: rgba(254, 95, 30, 0.05);
+    }
+
+    &.active {
+      font-weight: $font-bold;
+      color: $orange;
+    }
+  }
+}
+
+@media screen and (max-width: 950px) {
+  .categories {
+    grid-template-columns: repeat(2, 1fr);
+
+    > li {
+      text-align: center;
+      background-color: #f9f9f9;
+      padding: 10px 15px;
+    }
+  }
+
+  .sort {
+    grid-template-columns: auto;
+    grid-template-rows: repeat(2, 1fr);
+  }
+
+  .popup {
+    top: 70px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .container {
+    flex-direction: column;
+  }
+}

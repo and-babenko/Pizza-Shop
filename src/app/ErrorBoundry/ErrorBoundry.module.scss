@@ -1,0 +1,46 @@
+@import "../../shared/styles/variables.scss";
+
+.errorBoundry {
+  width: calc(100vw - 100px);
+  height: 100%;
+  background-color: #fff;
+  margin: 50px auto;
+  border-radius: 10px;
+  max-width: 1400px;
+  font-family: $body-font;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+
+  @media (max-width: 645px) {
+    width: calc(100vw - 30px);
+    margin-top: 15px;
+  }
+
+  > button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 5px;
+    border-radius: 30px;
+    padding: 7px 10px;
+    cursor: pointer;
+    border: 1px solid $orange;
+    background-color: #fff;
+    @include noselect();
+    transition: all $duration ease-in-out;
+    color: $orange;
+
+    &:hover {
+      background-color: $orange;
+      color: #fff;
+    }
+
+    &:active {
+      background-color: darken($orange, 8%);
+    }
+  }
+}

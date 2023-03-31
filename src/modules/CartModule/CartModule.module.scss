@@ -1,0 +1,273 @@
+@import "../../shared/styles/variables.scss";
+
+.cartModule {
+  max-width: 820px;
+  margin: 90px auto;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 30px;
+  min-height: 543px;
+}
+
+.icon {
+  &Cart {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  &Trash {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  > h2 {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 2rem;
+  }
+
+  > div {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    @include noselect();
+
+    span,
+    svg {
+      text-align: center;
+      color: $text-gray;
+      font-size: 1.25rem;
+      transition: all $duration ease-in-out;
+    }
+
+    &:hover {
+      span,
+      svg {
+        color: darken($color: $text-gray, $amount: 20);
+        text-decoration: underline;
+      }
+    }
+    &:active {
+      span,
+      svg {
+        color: darken($color: $text-gray, $amount: 40);
+      }
+    }
+  }
+}
+
+.cartTotal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  span {
+    font-size: 1.25rem;
+
+    &:last-of-type {
+      b {
+        color: $orange;
+      }
+    }
+  }
+}
+
+.contentItems {
+  margin-bottom: auto;
+  border-top: 1px solid $gray-line;
+}
+
+.bottomButtons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+
+  .returnBtn,
+  .payBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    height: 42px;
+
+    border-radius: 30px;
+    padding: 10px 20px;
+    transition: all $duration ease-in-out;
+    @include noselect();
+  }
+
+  .returnBtn {
+    border: 1px solid darken($gray-line, 20%);
+
+    span,
+    svg {
+      color: darken($gray-line, 20%);
+    }
+
+    &:hover {
+      background-color: darken($gray-line, 70%);
+      border-color: darken($gray-line, 70%);
+    }
+
+    &:active {
+      background-color: darken($gray-line, 80%);
+      border-color: darken($gray-line, 80%);
+    }
+  }
+
+  .payBtn {
+    background-color: $orange;
+    border: 1px solid transparent;
+
+    span {
+      color: #fff;
+    }
+
+    &:hover {
+      background-color: darken($orange, 8%);
+    }
+
+    &:active {
+      background-color: darken($orange, 12%);
+    }
+  }
+}
+
+.empty {
+  max-width: 820px;
+  margin: 90px auto;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 30px;
+  text-align: center;
+
+  > h2 {
+    font-size: 2rem;
+    font-weight: $font-semibold;
+  }
+
+  > p {
+    font-size: 1.25rem;
+    color: $text-gray;
+  }
+
+  > img {
+    display: block;
+    width: 60%;
+    margin: 50px auto;
+  }
+
+  > a {
+    border: 1px solid transparent;
+    margin: 0 auto;
+    font-weight: $font-medium;
+    font-size: 1.25rem;
+    background-color: $orange;
+    border-radius: 30px;
+    padding: 10px 30px;
+    cursor: pointer;
+
+    @include noselect();
+
+    span {
+      color: #fff;
+    }
+
+    &:hover {
+      background-color: darken($orange, 8%);
+    }
+
+    &:active {
+      background-color: darken($orange, 12%);
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .cartModule {
+    margin: 70px auto;
+    gap: 25px;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .cartModule,
+  .empty {
+    margin: 50px auto;
+    gap: 20px;
+  }
+
+  .header {
+    justify-content: center;
+
+    > h2 {
+      gap: 5px;
+      font-size: 1.5rem;
+      text-align: center;
+    }
+
+    > div {
+      span,
+      svg {
+        font-size: 1rem;
+      }
+    }
+  }
+
+  .cartTotal {
+    > span {
+      font-size: 1rem;
+      text-align: center;
+
+      > b {
+        display: block;
+      }
+    }
+  }
+
+  .bottomButtons {
+    flex-wrap: wrap;
+
+    .returnBtn {
+      margin-right: auto;
+    }
+    .payBtn {
+      margin-left: auto;
+    }
+  }
+
+  .empty {
+    > h2 {
+      font-size: 1.5rem;
+    }
+
+    > p {
+      font-size: 1rem;
+    }
+
+    > img {
+      display: block;
+      width: 80%;
+      margin: 30px auto;
+    }
+
+    > a {
+      font-size: 1rem;
+      padding: 10px 20px;
+    }
+  }
+}
