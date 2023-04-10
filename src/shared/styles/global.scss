@@ -1,18 +1,7 @@
 @import "./variables.scss";
 
-// html {
-//   -ms-text-size-adjust: 100%;
-//   -webkit-text-size-adjust: 100%;
-// }
-
-// body {
-//   -moz-osx-font-smoothing: grayscale;
-//   -webkit-font-smoothing: antialiased;
-//   color: $black;
-// }
-
 html {
-  background-color: $background;
+  background-color: $color-darkBackground;
 }
 
 a,
@@ -26,10 +15,6 @@ h4,
 h5 {
   color: $black;
 }
-
-// h1 {
-// font-size: 48px;
-// }
 
 h2 {
   font-weight: 600;

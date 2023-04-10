@@ -4,7 +4,7 @@
   border-bottom: 1px solid $gray-line;
   padding: 0 0 20px;
   display: grid;
-  gap: 30px;
+  row-gap: 30px;
   grid-template-columns: 2fr 3fr auto;
   grid-template-rows: auto;
   align-items: center;
@@ -44,6 +44,7 @@
     border-radius: 10px;
     font-size: 1rem;
     color: $text-black;
+    background-color: $color-mediumBackground;
 
     &:focus {
       outline: 1px solid rgba(0, 0, 0, 0.3);
@@ -69,13 +70,12 @@
   }
 
   &Cart {
-    color: #fff;
-    margin-right: 4px;
+    color: $color-lightBackground;
   }
 }
 
 .cart {
-  background-color: $orange;
+  background-color: $color-theme;
   border-radius: 30px;
   height: auto;
   cursor: pointer;
@@ -84,38 +84,32 @@
   padding: 12px 25px;
   max-width: 200px;
   transition: all $duration ease-in-out;
+  gap: 15px;
+  justify-self: flex-end;
 
   @include noselect();
 
-  span {
+  .price {
     font-weight: $font-semibold;
-    font-size: 1rem;
-    color: #fff;
-    word-spacing: 4px;
+    color: $color-lightBackground;
+    word-spacing: 2px;
+  }
+
+  .iconCartWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $color-lightBackground;
+    font-weight: $font-semibold;
+    gap: 2px;
   }
 
   &:hover {
-    background-color: darken($orange, 8%);
+    background-color: darken($color-theme, 8%);
   }
 
   &:active {
-    background-color: darken($orange, 12%);
-  }
-
-  .beforeLine {
-    position: relative;
-    margin-right: 28px;
-
-    &::before {
-      content: "";
-      position: absolute;
-      width: 1px;
-      top: -15%;
-      right: -14px;
-
-      height: 24px;
-      background-color: rgba(255, 255, 255, 0.25);
-    }
+    background-color: darken($color-theme, 12%);
   }
 }
 
@@ -124,34 +118,34 @@
   justify-content: flex-end;
   width: 100%;
 
-  > a {
+  > button {
     border: 1px solid transparent;
     font-weight: $font-medium;
     font-size: 1.25rem;
-    background-color: $orange;
+    background-color: $color-theme;
     border-radius: 30px;
     padding: 10px 30px;
     cursor: pointer;
     @include noselect();
 
     > span {
-      color: #fff;
+      color: $color-lightBackground;
     }
 
     &:hover {
-      background-color: darken($orange, 8%);
+      background-color: darken($color-theme, 8%);
     }
 
     &:active {
-      background-color: darken($orange, 12%);
+      background-color: darken($color-theme, 12%);
     }
   }
 }
 
 @media screen and (max-width: 1024px) {
   .header {
-    grid-template-columns: 1fr auto;
-    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: auto auto;
+    grid-template-rows: auto;
   }
 
   .search {

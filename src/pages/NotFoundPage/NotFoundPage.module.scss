@@ -1,4 +1,46 @@
 @import "../../shared/styles/variables.scss";
 
 .notFoundPage {
+  @include container;
+  display: flex;
+  flex-direction: column;
+  padding: 100px 0;
+  gap: 30px;
+  justify-content: center;
+  align-items: center;
+
+  > h1 {
+    font-size: 2rem;
+    font-weight: $font-semibold;
+  }
+
+  > p {
+    font-size: 1.25rem;
+    color: $text-gray;
+  }
+
+  > a {
+    border: 1px solid transparent;
+    margin: 0 auto;
+    font-weight: $font-medium;
+    font-size: 1.25rem;
+    background-color: $color-theme;
+    border-radius: 30px;
+    padding: 10px 30px;
+    cursor: pointer;
+
+    @include noselect();
+
+    span {
+      color: $color-lightBackground;
+    }
+
+    &:hover {
+      background-color: darken($color-theme, 8%);
+    }
+
+    &:active {
+      background-color: darken($color-theme, 12%);
+    }
+  }
 }

@@ -1,16 +1,13 @@
-export interface ICartItem {
-  id: number;
-  imageUrl: string;
-  name: string;
+export interface IPortionItem {
+  weight: number;
   price: number;
-  currentPizzaType: string;
-  currentPizzaSize: number;
-  count: number;
 }
 
-export interface IDeletedItem {
+export interface ICartItem {
+  id: string;
+  name: string;
+  portion: IPortionItem;
   count: number;
-  id: number;
 }
 
 export interface ICartState {

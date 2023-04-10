@@ -1,0 +1,24 @@
+@import "../../styles/variables.scss";
+
+.productFavButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.favButton {
+  font-size: 0;
+  cursor: pointer;
+  transition: all $duration ease-in-out;
+
+  > svg path {
+    color: $color-darkBackground;
+  }
+
+  &:hover,
+  &.liked {
+    > svg path {
+      color: $color-theme;
+    }
+  }
+}

@@ -78,7 +78,7 @@
 
     &:last-of-type {
       b {
-        color: $orange;
+        color: $color-theme;
       }
     }
   }
@@ -114,33 +114,43 @@
     span,
     svg {
       color: darken($gray-line, 20%);
+      transition: all $duration ease-in;
     }
 
     &:hover {
-      background-color: darken($gray-line, 70%);
-      border-color: darken($gray-line, 70%);
+      background-color: darken($gray-line, 40%);
+      border-color: darken($gray-line, 40%);
+
+      span,
+      svg {
+        color: $color-lightBackground;
+      }
+
+      svg {
+        transform: translateX(-2px);
+      }
     }
 
     &:active {
-      background-color: darken($gray-line, 80%);
-      border-color: darken($gray-line, 80%);
+      background-color: darken($gray-line, 60%);
+      border-color: darken($gray-line, 60%);
     }
   }
 
   .payBtn {
-    background-color: $orange;
+    background-color: $color-theme;
     border: 1px solid transparent;
 
     span {
-      color: #fff;
+      color: $color-lightBackground;
     }
 
     &:hover {
-      background-color: darken($orange, 8%);
+      background-color: darken($color-theme, 8%);
     }
 
     &:active {
-      background-color: darken($orange, 12%);
+      background-color: darken($color-theme, 12%);
     }
   }
 }
@@ -176,7 +186,7 @@
     margin: 0 auto;
     font-weight: $font-medium;
     font-size: 1.25rem;
-    background-color: $orange;
+    background-color: $color-theme;
     border-radius: 30px;
     padding: 10px 30px;
     cursor: pointer;
@@ -184,15 +194,15 @@
     @include noselect();
 
     span {
-      color: #fff;
+      color: $color-lightBackground;
     }
 
     &:hover {
-      background-color: darken($orange, 8%);
+      background-color: darken($color-theme, 8%);
     }
 
     &:active {
-      background-color: darken($orange, 12%);
+      background-color: darken($color-theme, 12%);
     }
   }
 }

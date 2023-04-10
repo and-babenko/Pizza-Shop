@@ -1,4 +1,4 @@
-export type sortPropertyType = "rating" | "price" | "name";
+export type sortPropertyType = "rating" | "startPrice" | "name";
 export type sortByType = "desc" | "inc";
 
 export type sortItemType = {
@@ -9,11 +9,11 @@ export type sortItemType = {
 
 export type categoryIdType =
   | "all"
-  | "meat"
+  | "pork"
+  | "chicken"
+  | "fish"
   | "vegan"
-  | "grill"
-  | "spicy"
-  | "covered";
+  | "noodles";
 
 export type categoryType = {
   name: string;

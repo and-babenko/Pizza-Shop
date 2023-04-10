@@ -3,7 +3,7 @@
 .errorBoundry {
   width: calc(100vw - 100px);
   height: 100%;
-  background-color: #fff;
+  background-color: $color-lightBackground;
   margin: 50px auto;
   border-radius: 10px;
   max-width: 1400px;
@@ -28,19 +28,19 @@
     border-radius: 30px;
     padding: 7px 10px;
     cursor: pointer;
-    border: 1px solid $orange;
-    background-color: #fff;
+    border: 1px solid $color-theme;
+    background-color: $color-lightBackground;
     @include noselect();
     transition: all $duration ease-in-out;
-    color: $orange;
+    color: $color-theme;
 
     &:hover {
-      background-color: $orange;
-      color: #fff;
+      background-color: $color-theme;
+      color: $color-lightBackground;
     }
 
     &:active {
-      background-color: darken($orange, 8%);
+      background-color: darken($color-theme, 8%);
     }
   }
 }

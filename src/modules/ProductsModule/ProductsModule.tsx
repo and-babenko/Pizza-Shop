@@ -16,12 +16,12 @@ const EmptyCatalog: React.FC<{ error: string }> = ({ error }) => {
   return (
     <div className={styles.emptyCatalog}>
       <h2>
-        Произошла ошибка <span>😕</span>
+        An error occurred <span>😕</span>
       </h2>
       {error === "empty" ? (
-        <p> По вашему запросу товары не найдены </p>
+        <p>No products were found for your query</p>
       ) : (
-        <p>Я обязательно настрою sentry и узнаю о проблеме :)</p>
+        <p>I will definitely set up sentry and find out about the problem!</p>
       )}
     </div>
   );
@@ -95,7 +95,7 @@ const ProductsModule: React.FC = () => {
     dispatch(setFilters(filtersData));
   };
 
-  const getProducts = async () => {
+  const getProducts = () => {
     dispatch(fetchProducts({ search, sortBy, sortProperty, category }));
   };
 

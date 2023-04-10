@@ -2,11 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { IFilterState, sortURLType } from "../types";
 
-import {
-  categoryIdType,
-  sortByType,
-  sortPropertyType,
-} from "components/Categories";
+import { categoryIdType } from "components/Categories";
 
 const initialState: IFilterState = {
   category: "all",

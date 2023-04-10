@@ -17,12 +17,12 @@ const EmpryCart: React.FC = () => {
   return (
     <div className={styles.empty}>
       <h2>
-        Корзина пустая <span>😕</span>
+        Cart is empty <span>😕</span>
       </h2>
-      <p>Для заказа перейдите на главную страницу.</p>
+      <p>Return to the catalog page to order</p>
       <img src={emptyCartImage} alt="Cart" />
       <Link to="/">
-        <span>Вернуться назад</span>
+        <span>Return</span>
       </Link>
     </div>
   );
@@ -31,23 +31,23 @@ const EmpryCart: React.FC = () => {
 const CartModule: React.FC = () => {
   const dispatch = useDispatch();
   const {
-    items: itemsFromCart,
+    items: itemsInCart,
     totalCount,
     totalPrice,
   } = useSelector(cartSelector);
 
-  const cartItemsList = itemsFromCart.map((elem) => (
-    <CartItem key={elem.id} {...elem} />
+  const cartItemsList = itemsInCart.map((item, idx) => (
+    <CartItem key={idx} {...item} />
   ));
 
-  if (itemsFromCart.length === 0) return <EmpryCart />;
+  if (itemsInCart.length === 0) return <EmpryCart />;
 
   return (
     <div className={styles.cartModule}>
       <header className={styles.header}>
         <h2>
           <UilShoppingCartAlt className={styles.iconCart} />
-          Корзина
+          Cart
         </h2>
         <div>
           <UilTrashAlt className={styles.iconTrash} />
@@ -57,7 +57,7 @@ const CartModule: React.FC = () => {
               dispatch(deleteAllItems());
             }}
           >
-            Очистить корзину
+            Clear cart
           </span>
         </div>
       </header>
@@ -66,21 +66,21 @@ const CartModule: React.FC = () => {
 
       <div className={styles.cartTotal}>
         <span>
-          Всего пицц: <b>{totalCount} шт.</b>
+          Total amount: <b>{totalCount}</b>
         </span>
         <span>
-          Сумма заказа: <b>{totalPrice} ₽</b>
+          Order value: <b>{totalPrice}$</b>
         </span>
       </div>
 
       <div className={styles.bottomButtons}>
         <Link to="/" className={styles.returnBtn}>
           <UilAngleLeft className={styles.iconReturn} />
-          <span>Вернуться назад</span>
+          <span>Exit</span>
         </Link>
 
         <button className={styles.payBtn}>
-          <span>Оплатить сейчас</span>
+          <span>Pay now</span>
         </button>
       </div>
     </div>

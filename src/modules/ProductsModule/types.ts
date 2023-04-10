@@ -11,17 +11,21 @@ export enum PoductsLoadingStatus {
   EMPTY = "empty",
 }
 
-export type productType = "Тонкое" | "Традиционное";
+type portionItemType = {
+  weight: number;
+  price: number;
+};
 
 export interface IProductItem {
-  id: number;
-  imageUrl: string;
+  id: string;
   name: string;
-  types: productType[];
-  sizes: number[];
-  price: number;
+  category: categoryIdType;
   rating: number;
-  category: string;
+  shortDescription: string;
+  longDescription: string;
+  allergens: string;
+  startPrice: number;
+  portions: portionItemType[];
 }
 
 export interface IProductState {

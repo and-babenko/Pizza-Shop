@@ -1,120 +1,56 @@
 @import "../../shared/styles/variables.scss";
 
-.CatalogItem {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-  row-gap: 20px;
-  width: 300px;
+.catalogItem {
+  $headerSize: 65px;
+  $descriptionSize: 75px;
 
-  img {
-    min-height: 270px;
-    width: 90%;
-  }
-
-  h3 {
-    font-size: 1.5rem;
-    font-weight: $font-bold;
-    height: 57px;
-    overflow-y: auto;
-  }
-}
-
-.selector {
-  display: flex;
-  flex-direction: column;
-  background-color: $gray-bg;
-  border-radius: 10px;
-  padding: 6px;
-  row-gap: 6px;
-
-  @include noselect();
-
-  > ul {
+  &Container {
     display: flex;
-    flex-grow: 1;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    row-gap: 10px;
+    width: 300px;
+  }
 
-    > li {
-      padding: 8px;
-      flex: 1;
-      cursor: pointer;
-      font-weight: $font-semibold;
-      font-size: 0.875rem;
+  &Link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 10px;
 
-      &.active {
-        background: #ffffff;
-        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04);
-        border-radius: 5px;
-        cursor: auto;
+    > div {
+      min-height: 270px;
+      width: 90%;
+      font-size: 0;
+      border: 1px solid transparent;
+      > img {
+        border-radius: 10px;
       }
     }
-  }
-}
 
-.bottom {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  > div {
-    font-weight: $font-bold;
-    font-size: 1.3rem;
+    > h2 {
+      font-size: 1.5rem;
+      font-weight: $font-bold;
+      height: $headerSize;
+      overflow-y: auto;
+    }
   }
 
-  > button {
+  &Description {
+    height: $descriptionSize;
+    overflow-y: auto;
+    padding-right: 5px;
+  }
+
+  &Footer {
     display: flex;
     align-items: center;
-    justify-content: center;
-    column-gap: 5px;
-    border-radius: 30px;
-    padding: 7px 10px;
-    cursor: pointer;
-    border: 1px solid $orange;
-    background-color: #fff;
-    @include noselect();
-    transition: all $duration ease-in-out;
+    justify-content: space-around;
 
-    span,
-    svg path {
-      color: $orange;
+    > div {
       font-weight: $font-bold;
-      transition: all $duration ease-in-out;
-    }
-
-    i {
-      transition: all $duration ease-in-out;
-      display: inline-block;
-      border-radius: 30px;
-      background-color: $orange;
-      color: #fff;
-      font-weight: $font-bold;
-      width: 22px;
-      height: 22px;
-      font-style: normal;
-      font-size: 13px;
-      line-height: 22px;
-    }
-
-    &:hover {
-      background-color: $orange;
-
-      span {
-        color: #fff;
-      }
-
-      svg path {
-        fill: #fff;
-      }
-
-      i {
-        background-color: #fff;
-        color: $orange;
-      }
-    }
-
-    &:active {
-      background-color: darken($orange, 8%);
+      font-size: 1.3rem;
     }
   }
 }

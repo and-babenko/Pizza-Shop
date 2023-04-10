@@ -9,11 +9,14 @@
   align-items: center;
   gap: 20px;
   border-bottom: 1px solid $gray-line;
+
+  button {
+    cursor: pointer;
+  }
 }
 
 .info {
   justify-self: flex-start;
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -47,13 +50,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid $orange;
+    border: 1px solid $color-theme;
     border-radius: 50%;
     width: 32px;
     height: 32px;
     padding: 0;
     border-width: 2px;
-    color: $orange;
+    color: $color-theme;
     background-color: inherit;
     transition: all $duration ease-in-out;
 
@@ -64,15 +67,15 @@
     }
 
     &:hover {
-      background-color: $orange;
+      background-color: $color-theme;
       svg path {
-        fill: #fff;
+        fill: $color-lightBackground;
       }
     }
 
     &:active {
-      background-color: darken($orange, 15%);
-      border-color: darken($orange, 15%);
+      background-color: darken($color-theme, 15%);
+      border-color: darken($color-theme, 15%);
     }
   }
 

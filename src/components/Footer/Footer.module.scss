@@ -1,0 +1,28 @@
+@import "../../shared/styles/variables.scss";
+
+.footer {
+  border-top: 1px solid $gray-line;
+  padding-top: 20px;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+
+  p {
+    color: $text-gray;
+  }
+
+  a {
+    color: $color-theme;
+    font-weight: $font-bold;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &:active {
+      color: darken($text-gray, 15%);
+    }
+  }
+}

@@ -12,27 +12,22 @@ import {
 import { deleteItem } from "modules/CartModule";
 
 const CartItem: React.FC<ICartItem> = (props) => {
-  const {
-    id,
-    imageUrl,
-    name,
-    price,
-    currentPizzaType,
-    currentPizzaSize,
-    count,
-  } = props;
+  const { id, name, count, portion } = props;
 
+  const image = require(`../../shared/assets/productImgs/${id}.jpg`);
   const dispatch = useDispatch();
+
+  const calculatedPrice = (portion.price * count).toFixed(2);
 
   return (
     <div className={styles.cartItem}>
       <div className={styles.info}>
-        <img src={imageUrl} alt={name} />
+        <img src={image} alt={name} />
         <div>
-          <h3>{name}</h3>
-          <p>
-            {currentPizzaType}, {currentPizzaSize} см, {price}$
-          </p>
+          <h3>
+            {name}, {portion.weight}g
+          </h3>
+          <p>{portion.price}$</p>
         </div>
       </div>
 
@@ -46,11 +41,11 @@ const CartItem: React.FC<ICartItem> = (props) => {
         </button>
       </div>
 
-      <b className={styles.price}>{price * count}$</b>
+      <b className={styles.price}>{calculatedPrice}$</b>
 
       <button
         onClick={() => {
-          dispatch(deleteItem({ id, count }));
+          dispatch(deleteItem(props));
         }}
         className={styles.remove}
       >

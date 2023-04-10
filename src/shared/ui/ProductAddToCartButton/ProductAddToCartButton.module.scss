@@ -1,0 +1,57 @@
+@import "../../styles/variables.scss";
+
+.productAddToCartButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 5px;
+  border-radius: 10px;
+  padding: 7px 10px;
+  cursor: pointer;
+  border: 1px solid $color-theme;
+  background-color: $color-lightBackground;
+  @include noselect();
+  transition: all $duration ease-in-out;
+
+  span,
+  svg path {
+    color: $color-theme;
+    font-weight: $font-bold;
+    transition: all $duration ease-in-out;
+  }
+
+  i {
+    transition: all $duration ease-in-out;
+    display: inline-block;
+    border-radius: 30px;
+    background-color: $color-theme;
+    color: $color-lightBackground;
+    font-weight: $font-bold;
+    width: 22px;
+    height: 22px;
+    font-style: normal;
+    font-size: 13px;
+    line-height: 22px;
+  }
+
+  &:hover {
+    background-color: $color-theme;
+
+    span {
+      color: $color-lightBackground;
+    }
+
+    svg path {
+      fill: $color-lightBackground;
+    }
+
+    i {
+      background-color: $color-lightBackground;
+      color: $color-theme;
+    }
+  }
+
+  &:active {
+    background-color: darken($color-theme, 8%);
+  }
+}

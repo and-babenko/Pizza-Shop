@@ -110,7 +110,7 @@ const Categories: React.FC = () => {
             className={`${styles.icon} ${isPopupVisible && styles.iconRotate}`}
           />
 
-          <b>Сортировка по:</b>
+          <b>Sort by:</b>
         </div>
         <p>{currentSort?.label}</p>
 

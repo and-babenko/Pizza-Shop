@@ -12,10 +12,11 @@ $basic-font-size: 16px;
 $z-fixed: 10;
 
 $black: #232323;
-$background: #ffdf8c;
-$gray-line: #f6f6f6;
-$orange: #fe5f1e;
-$gray-bg: #f9f9f9;
+$color-darkBackground: rgba(150, 155, 214, 1);
+$color-mediumBackground: #f9f9f9;
+$color-lightBackground: rgb(237, 238, 250);
+$gray-line: rgba(150, 155, 214, 0.5);
+$color-theme: rgba(84, 42, 81, 1);
 
 $text-black: #232323;
 $text-gray: #7b7b7b;

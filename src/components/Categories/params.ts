@@ -2,33 +2,33 @@ import { sortItemType, categoryType } from "./types";
 
 export const sortList: sortItemType[] = [
   {
-    label: "популярности, по убыванию",
+    label: "popularity, desc",
     property: "rating",
     sortBy: "desc",
   },
   {
-    label: "популярности, по возрастанию",
+    label: "popularity, inc",
     property: "rating",
     sortBy: "inc",
   },
 
   {
-    label: "цене, по возрастанию",
-    property: "price",
+    label: "price, inc",
+    property: "startPrice",
     sortBy: "inc",
   },
   {
-    label: "цене, по убыванию",
-    property: "price",
+    label: "price, desc",
+    property: "startPrice",
     sortBy: "desc",
   },
   {
-    label: "алфавиту, по возрастанию",
+    label: "name, inc",
     property: "name",
     sortBy: "inc",
   },
   {
-    label: "алфавиту, по убыванию",
+    label: "name, desc",
     property: "name",
     sortBy: "desc",
   },
@@ -36,27 +36,27 @@ export const sortList: sortItemType[] = [
 
 export const categoriesList: categoryType[] = [
   {
-    name: "Все",
+    name: "All",
     id: "all",
   },
   {
-    name: "Мясные",
-    id: "meat",
+    name: "Pork",
+    id: "pork",
   },
   {
-    name: "Вегетарианские",
+    name: "Chicken",
+    id: "chicken",
+  },
+  {
+    name: "Fish",
+    id: "fish",
+  },
+  {
+    name: "Vegetarian",
     id: "vegan",
   },
   {
-    name: "Гриль",
-    id: "grill",
-  },
-  {
-    name: "Острые",
-    id: "spicy",
-  },
-  {
-    name: "Закрытые",
-    id: "covered",
+    name: "Noodles",
+    id: "noodles",
   },
 ];
